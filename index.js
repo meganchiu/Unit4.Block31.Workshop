@@ -1,5 +1,15 @@
 /* import and initialize express app */
 
+const express = require('express');
+// Initialize application
+const app = express();
+
+const init = async() => {
+  console.log('data seeded');
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => console.log(`listening on port ${port}`));
+}
+
 const PORT = 3000;
 /* this middleware deals with CORS errors and allows the client on port 5173 to access the server */
 const cors = require('cors');
@@ -17,12 +27,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* set up intial hello world route */
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 /* set up api route */
-
+const employees = require("./db/index"); // Import employees array
+app.get("/api/employees", (req, res) => {
+  res.json(employees)
+});
 
 /* our middleware won't capture 404 errors, so we're setting up a separate error handler for those*/
 app.use((req, res, next) => {
   res.status(404).send("Sorry, can't find that!");
 });
 /* initialize server (listen) */
+
+init();
