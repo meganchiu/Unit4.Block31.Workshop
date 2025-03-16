@@ -30,7 +30,7 @@ function App() {
           <div key={employee.id}>
             <h3>Name: {employee.name}</h3>
             <p>Contact: {employee.phone}</p>
-            {employee.isAdmin && <p>Admin</p>}
+            <p>Admin: {employee.isAdmin.toString()}</p>
           </div>
         ))}
       </div>
